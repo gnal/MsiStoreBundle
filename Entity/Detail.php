@@ -21,9 +21,26 @@ abstract class Detail
     protected $quantity;
 
     /**
+     * @ORM\Column(type="decimal", scale=2)
+     */
+    protected $price;
+
+    /**
      * @ORM\Column(type="decimal", scale=2, nullable=true)
      */
     protected $total;
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
 
     public function getId()
     {

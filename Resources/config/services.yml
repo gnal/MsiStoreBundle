@@ -2,6 +2,7 @@ parameters:
 #    msi_store.example.class: Msi\StoreBundle\Example
 
 services:
-#    msi_store.example:
-#        class: %msi_store.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    msi_store.provider:
+        class: Msi\StoreBundle\Provider\Provider
+        arguments: [ @service_container ]
+        scope: request

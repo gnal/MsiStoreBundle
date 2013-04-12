@@ -1,0 +1,33 @@
+{% extends 'MsiStoreBundle::layout.html.twig' %}
+
+{% block title %}Product List{% endblock title %}
+
+{% block content %}
+<hr>
+{% for product in products %}
+    <div class="row">
+        <div class="span6">
+            <p><strong>{{ product.translation.name }}</strong></p>
+            {{ product.translation.description|raw }}
+        </div>
+        <div class="span3">
+            ${{ product.price }}
+        </div>
+        <div class="span3">
+            <form method="POST" action="#">
+                <input type="hidden" value="{{ product.id }}" name="productId">
+                <a href="#" class="decrement btn btn-small"><i class="icon-arrow-down"></i></a>
+                <input type="text" class="qty span1" value="1" name="quantity" style="margin-bottom: 0;">
+                <a href="#" class="increment btn btn-small"><i class="icon-arrow-up"></i></a>
+                <button type="submit" class="btn btn-small">ajouter</button>
+            </form>
+        </div>
+    </div>
+    <hr>
+{% endfor %}
+{% endblock content %}
+
+{% block js %}
+{{ parent() }}
+<script src="{{ asset('bundles/msistore/js/store.js') }}"></script>
+{% endblock js %}

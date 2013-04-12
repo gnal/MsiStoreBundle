@@ -1,3 +1,7 @@
-msi_store_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: MsiStoreBundle:Default:index }
+msi_store_order_show:
+    pattern:  /cart
+    defaults: { _controller: MsiStoreBundle:Order:show }
+
+msi_store_product_index:
+    pattern:  /product/list
+    defaults: { _controller: MsiStoreBundle:Product:index }

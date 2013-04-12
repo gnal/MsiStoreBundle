@@ -1,0 +1,35 @@
+{% extends 'MsiStoreBundle::layout.html.twig' %}
+
+{% block title %}Shopping Cart{% endblock title %}
+
+{% block content %}
+<div class="well">
+    <table class="table table-bordered">
+        <tr>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Total</th>
+        </tr>
+        {% for detail in order.details %}
+        <tr id="cart-product-{{ detail.product.id }}">
+            <td>{{ detail.product.translation.name }}</td>
+             <td class="span1">
+                <form style="margin: 0;" method="POST" action="{{ path('cao_app_order_detail_edit', {'id': detail.id}) }}">
+                    <input type="text" class="msi_store_cart_edit span1" value="{{ detail.quantity }}" name="quantity">
+                    <a class="btn btn-mini" href="#"><i class="icon-refresh"></i></a>
+                    <a class="cao_app_order_detail_delete btn btn-mini" href="{{ path('cao_app_order_detail_delete', {'id': detail.id}) }}"><i class="icon-trash"></i></a>
+                </form>
+            </td>
+            <td class="detailTotal{{ detail.id }}">${{ order_strategy.getOrderDetailTotal(detail)|number_format(2) }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan=4>Vide</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="text-right">
+        <a class="btn btn-primary btn-large" href="#">Checkout &raquo;</a>
+    </div>
+</div>
+{% endblock content %}

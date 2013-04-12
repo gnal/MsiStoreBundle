@@ -1,0 +1,4 @@
+Msi\StoreBundle\Entity\ProductTranslation:
+    properties:
+        name:
+            - NotBlank: ~
