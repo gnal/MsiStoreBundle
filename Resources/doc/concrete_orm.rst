@@ -75,15 +75,15 @@ Order class
 
     <?php
 
-    namespace Acme\CmfBundle\Entity;
+    namespace Acme\StoreBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
-    use Msi\CmfBundle\Entity\Page as BasePage;
+    use Msi\StoreBundle\Entity\Order as BaseOrder;
 
     /**
      * @ORM\Entity
      */
-    class Page extends BasePage
+    class Order extends BaseOrder
     {
         /**
          * @ORM\Column(type="integer")
@@ -93,49 +93,14 @@ Order class
         protected $id;
 
         /**
-         * @ORM\ManyToMany(targetEntity="Block", mappedBy="pages")
+         * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User", inversedBy="orders")
          */
-        protected $blocks;
+        protected $user;
 
         /**
-         * @ORM\ManyToOne(targetEntity="Site")
+         * @ORM\OneToMany(targetEntity="Detail", mappedBy="order", cascade={"persist", "remove"})
          */
-        protected $site;
-
-        /**
-         * @ORM\OneToMany(targetEntity="PageTranslation", mappedBy="object", cascade={"persist", "remove"})
-         */
-        protected $translations;
-    }
-
-OrderTranslation class
--------------
-
-::
-
-    <?php
-
-    namespace Acme\CmfBundle\Entity;
-
-    use Doctrine\ORM\Mapping as ORM;
-    use Msi\CmfBundle\Entity\PageTranslation as BasePageTranslation;
-
-    /**
-     * @ORM\Entity
-     */
-    class PageTranslation extends BasePageTranslation
-    {
-        /**
-         * @ORM\Column(type="integer")
-         * @ORM\Id
-         * @ORM\GeneratedValue(strategy="AUTO")
-         */
-        protected $id;
-
-        /**
-         * @ORM\ManyToOne(targetEntity="Page", inversedBy="translations")
-         */
-        protected $object;
+        protected $details;
     }
 
 Category class
