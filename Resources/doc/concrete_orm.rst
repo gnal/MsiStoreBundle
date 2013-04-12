@@ -104,6 +104,42 @@ Order class
         protected $details;
     }
 
+Detail class
+-------------
+
+::
+
+    <?php
+
+    namespace Acme\StoreBundle\Entity;
+
+    use Doctrine\ORM\Mapping as ORM;
+    use Msi\StoreBundle\Entity\Detail as BaseDetail;
+
+    /**
+     * @ORM\Entity
+     */
+    class Detail extends BaseDetail
+    {
+        /**
+         * @ORM\Column(type="integer")
+         * @ORM\Id
+         * @ORM\GeneratedValue(strategy="AUTO")
+         */
+        protected $id;
+
+        /**
+         * @ORM\ManyToOne(targetEntity="Order", inversedBy="details")
+         */
+        protected $order;
+
+        /**
+         * @ORM\ManyToOne(targetEntity="Product")
+         * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="SET NULL")
+         */
+        protected $product;
+    }
+
 Category class
 -------------
 
