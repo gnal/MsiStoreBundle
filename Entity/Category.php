@@ -13,8 +13,8 @@ use Msi\CmfBundle\Doctrine\Extension\Timestampable\Traits\TimestampableEntity;
 use Msi\CmfBundle\Doctrine\Extension\Timestampable\TimestampableInterface;
 
 /**
- * @ORM\MappedSuperclass
  * @Gedmo\Tree(type="nested")
+ * @ORM\MappedSuperclass
  */
 abstract class Category implements TimestampableInterface, TranslatableInterface
 {
@@ -41,7 +41,7 @@ abstract class Category implements TimestampableInterface, TranslatableInterface
 
     /**
      * @Gedmo\TreeRoot
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $root;
 

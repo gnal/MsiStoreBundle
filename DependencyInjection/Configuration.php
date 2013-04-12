@@ -20,10 +20,49 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('msi_store');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $this->addProductSection($rootNode);
+        $this->addOrderSection($rootNode);
+        $this->addCategorySection($rootNode);
 
         return $treeBuilder;
+    }
+
+    private function addProductSection($node)
+    {
+        $node
+            ->children()
+                ->scalarNode('product_class')
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode('product_admin')->defaultValue('Msi\StoreBundle\Admin\ProductAdmin')->cannotBeEmpty()->end()
+            ->end()
+        ;
+    }
+
+    private function addOrderSection($node)
+    {
+        $node
+            ->children()
+                ->scalarNode('order_class')
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode('order_admin')->defaultValue('Msi\StoreBundle\Admin\OrderAdmin')->cannotBeEmpty()->end()
+            ->end()
+        ;
+    }
+
+    private function addCategorySection($node)
+    {
+        $node
+            ->children()
+                ->scalarNode('category_class')
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode('category_admin')->defaultValue('Msi\StoreBundle\Admin\CategoryAdmin')->cannotBeEmpty()->end()
+            ->end()
+        ;
     }
 }

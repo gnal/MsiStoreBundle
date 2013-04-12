@@ -48,11 +48,12 @@ ProductTranslation class
     namespace Acme\StoreBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
+    use Msi\StoreBundle\Entity\ProductTranslation as BaseProductTranslation;
 
     /**
      * @ORM\Entity
      */
-    class ProductTranslation
+    class ProductTranslation extends BaseProductTranslation
     {
         /**
          * @ORM\Column(type="integer")
@@ -148,11 +149,12 @@ Category class
 
     use Doctrine\ORM\Mapping as ORM;
     use Gedmo\Mapping\Annotation as Gedmo;
+    use Msi\StoreBundle\Entity\Category as BaseCategory;
 
     /**
      * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
      */
-    class Category
+    class Category extends BaseCategory
     {
         /**
          * @ORM\Column(type="integer")
@@ -164,11 +166,12 @@ Category class
         /**
          * @Gedmo\TreeParent
          * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
+         * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
          */
         protected $parent;
 
         /**
-         * @ORM\OneToMany(targetEntity="Category", mappedBy="parent", cascade={"remove"})
+         * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
          * @ORM\OrderBy({"lft" = "ASC"})
          */
         protected $children;
@@ -194,11 +197,12 @@ CategoryTranslation class
     namespace Acme\StoreBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
+    use Msi\StoreBundle\Entity\CategoryTranslation as BaseCategoryTranslation;
 
     /**
      * @ORM\Entity
      */
-    class CategoryTranslation
+    class CategoryTranslation extends BaseCategoryTranslation
     {
         /**
          * @ORM\Column(type="integer")

@@ -17,6 +17,23 @@ abstract class ProductTranslation
      */
     protected $name;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $description;
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
     public function getName()
     {
         return $this->name;
