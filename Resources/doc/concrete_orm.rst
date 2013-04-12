@@ -94,6 +94,7 @@ Order class
 
         /**
          * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User", inversedBy="orders")
+         * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="SET NULL")
          */
         protected $user;
 
