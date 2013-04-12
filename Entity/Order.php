@@ -113,6 +113,35 @@ abstract class Order implements TimestampableInterface
         $this->details = new ArrayCollection();
     }
 
+    public function addDetail(Product $product, $quantity)
+    {
+        foreach ($this->getDetails() as $element) {
+            if ($element->getProduct()->getId() === $product->getId()) {
+                $detail = $element;
+            }
+        }
+
+        if (isset($detail)) {
+            $detail->setQuantity($detail->getQuantity() + $quantity);
+        } else {
+            $detail = new OrderDetail();
+            $detail->setProduct($product);
+            $detail->setQuantity($quantity);
+            $detail->setOrder($this);
+            $this->getDetails()->add($detail);
+        }
+
+        if ($detail->getQuantity() > 999) {
+            $detail->setQuantity(999);
+        }
+
+        if ($detail->getQuantity() < 1) {
+            $detail->setQuantity(1);
+        }
+
+        $this->setUpdatedAt(new \DateTime());
+    }
+
     public function getUser()
     {
         return $this->user;

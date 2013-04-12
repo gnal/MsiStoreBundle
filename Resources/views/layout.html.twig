@@ -22,6 +22,12 @@ function nl(t){t.className=t.className.replace(new RegExp(/\shide|hide\s|hide/),
 
 {% block body %}
 <div class="container">
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success fade in">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
     <h2>{{ block('title') }}</h2>
     {{ block('page_content') }}
 </div>

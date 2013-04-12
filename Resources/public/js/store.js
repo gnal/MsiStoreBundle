@@ -26,7 +26,7 @@
                 self.fixQuantity($(this));
             });
 
-            $('form.cao_app_order_detail_new').on('submit', function(e) {
+            $('form.msi_store_detail_new').on('submit', function(e) {
                 if (self.fixQuantity($(this).find('input.qty')) !== 0) {
                     self.addElement($(this));
                 }
@@ -116,17 +116,15 @@
 
             self.showAjaxLoader();
 
-            $('div.alert').fadeOut(200, function() {
-                $.ajax($form.attr('action'), {
-                    data: $form.serialize(),
-                    type: 'POST',
-                    success: function(data) {
-                        $('#cart-count').text(data.count);
-                        $('.alert').addClass('alert-success').children('div.message').html(data.flash);
-                        $('.alert').fadeIn(200);
-                        $form.find('input.qty').val(0);
-                    }
-                });
+            $.ajax($form.attr('action'), {
+                data: $form.serialize(),
+                type: 'POST',
+                success: function(data) {
+                    $('#cart-count').text(data.count);
+                    $('.alert').addClass('alert-success').children('div.message').html(data.flash);
+                    $('.alert').fadeIn(200);
+                    $form.find('input.qty').val(0);
+                }
             });
         },
 

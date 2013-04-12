@@ -14,7 +14,7 @@
             ${{ product.price }}
         </div>
         <div class="span3">
-            <form method="POST" action="#">
+            <form class="msi_store_detail_new" method="POST" action="{{ path('msi_store_detail_new') }}">
                 <input type="hidden" value="{{ product.id }}" name="productId">
                 <a href="#" class="decrement btn btn-small"><i class="icon-arrow-down"></i></a>
                 <input type="text" class="qty span1" value="1" name="quantity" style="margin-bottom: 0;">

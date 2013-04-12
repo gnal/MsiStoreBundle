@@ -2,6 +2,10 @@ msi_store_order_show:
     pattern:  /cart
     defaults: { _controller: MsiStoreBundle:Order:show }
 
+msi_store_detail_new:
+    pattern:  /detail/new
+    defaults: { _controller: MsiStoreBundle:Detail:new }
+
 msi_store_product_index:
     pattern:  /product/list
     defaults: { _controller: MsiStoreBundle:Product:index }
