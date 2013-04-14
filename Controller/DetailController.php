@@ -3,6 +3,7 @@
 namespace Msi\StoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DetailController extends Controller
 {
@@ -16,7 +17,37 @@ class DetailController extends Controller
             ]
         );
 
-        $order->addDetail($product, $this->getRequest()->request->get('quantity'));
+
+
+        foreach ($order->getDetails() as $element) {
+            if ($element->getProduct()->getId() === $product->getId()) {
+                $detail = $element;
+            }
+        }
+
+        if (isset($detail)) {
+            $detail->setQuantity($detail->getQuantity() + $this->getRequest()->request->get('quantity'));
+        } else {
+            $detail = $this->get('msi_store.detail_manager')->create();
+            $detail->setProduct($product);
+            $detail->setPrice($product->getPrice());
+            $detail->setName($product->getName());
+            $detail->setQuantity($this->getRequest()->request->get('quantity'));
+            $detail->setOrder($order);
+            $order->getDetails()->add($detail);
+        }
+
+        if ($detail->getQuantity() > 999) {
+            $detail->setQuantity(999);
+        }
+
+        if ($detail->getQuantity() < 1) {
+            $detail->setQuantity(1);
+        }
+
+        $order->setUpdatedAt(new \DateTime());
+
+
 
         $this->container->get('msi_store.order_manager')->update($order);
 

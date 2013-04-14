@@ -39,3 +39,16 @@ services:
         class: %msi_cmf.manager.class%
         arguments: [ %msi_store.category.class% ]
         parent: msi_cmf.manager
+
+    # Detail
+    msi_store_detail_admin:
+        class: %msi_store.detail.admin%
+        arguments: [ @msi_store.detail_manager ]
+        parent: msi_cmf.admin
+        tags:
+            - { name: msi.admin }
+
+    msi_store.detail_manager:
+        class: %msi_cmf.manager.class%
+        arguments: [ %msi_store.detail.class% ]
+        parent: msi_cmf.manager

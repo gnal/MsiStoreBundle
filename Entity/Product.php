@@ -61,7 +61,7 @@ abstract class Product implements TimestampableInterface, TranslatableInterface
         return $this->category;
     }
 
-    public function setCategory($category)
+    public function setCategory(Category $category)
     {
         $this->category = $category;
 

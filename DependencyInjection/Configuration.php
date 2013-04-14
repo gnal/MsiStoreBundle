@@ -22,6 +22,7 @@ class Configuration implements ConfigurationInterface
 
         $this->addProductSection($rootNode);
         $this->addOrderSection($rootNode);
+        $this->addDetailSection($rootNode);
         $this->addCategorySection($rootNode);
 
         return $treeBuilder;
@@ -49,6 +50,19 @@ class Configuration implements ConfigurationInterface
                     ->cannotBeEmpty()
                 ->end()
                 ->scalarNode('order_admin')->defaultValue('Msi\StoreBundle\Admin\OrderAdmin')->cannotBeEmpty()->end()
+            ->end()
+        ;
+    }
+
+    private function addDetailSection($node)
+    {
+        $node
+            ->children()
+                ->scalarNode('detail_class')
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode('detail_admin')->defaultValue('Msi\StoreBundle\Admin\DetailAdmin')->cannotBeEmpty()->end()
             ->end()
         ;
     }

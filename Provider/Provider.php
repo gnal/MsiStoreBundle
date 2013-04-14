@@ -32,11 +32,12 @@ class Provider
                 $qb->andWhere($qb->expr()->isNull('a.frozenAt'));
 
                 $this->order = $qb->getQuery()->getOneOrNullResult();
+
+                $this->order->setUser($user);
             }
 
             if (!$this->order) {
                 $this->order = $orderManager->create();
-                $this->order->setUser($user);
             }
         }
 

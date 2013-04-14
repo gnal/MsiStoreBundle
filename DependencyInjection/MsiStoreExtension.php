@@ -34,9 +34,11 @@ class MsiStoreExtension extends Extension
         $container->setParameter('msi_store.product.class', $config['product_class']);
         $container->setParameter('msi_store.order.class', $config['order_class']);
         $container->setParameter('msi_store.category.class', $config['category_class']);
+        $container->setParameter('msi_store.detail.class', $config['detail_class']);
 
         $container->setParameter('msi_store.product.admin', $config['product_admin']);
         $container->setParameter('msi_store.order.admin', $config['order_admin']);
         $container->setParameter('msi_store.category.admin', $config['category_admin']);
+        $container->setParameter('msi_store.detail.admin', $config['detail_admin']);
     }
 }

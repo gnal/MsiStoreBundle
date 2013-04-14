@@ -83,6 +83,30 @@ abstract class Detail
         return $this;
     }
 
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    public function setProduct(Product $product)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    public function setOrder(Order $order)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
     public function __toString()
     {
         return (string) '#'.$this->id;
