@@ -17,21 +17,20 @@ class DetailController extends Controller
             ]
         );
 
-
-
+        // check if the order already has this product
         foreach ($order->getDetails() as $element) {
             if ($element->getProduct()->getId() === $product->getId()) {
                 $detail = $element;
             }
         }
 
-        if (isset($detail)) {
+        if (!empty($detail)) {
             $detail->setQuantity($detail->getQuantity() + $this->getRequest()->request->get('quantity'));
         } else {
             $detail = $this->get('msi_store.detail_manager')->create();
             $detail->setProduct($product);
             $detail->setPrice($product->getPrice());
-            $detail->setName($product->getName());
+            $detail->setName($product->getTranslation()->getName());
             $detail->setQuantity($this->getRequest()->request->get('quantity'));
             $detail->setOrder($order);
             $order->getDetails()->add($detail);
@@ -46,8 +45,6 @@ class DetailController extends Controller
         }
 
         $order->setUpdatedAt(new \DateTime());
-
-
 
         $this->container->get('msi_store.order_manager')->update($order);
 

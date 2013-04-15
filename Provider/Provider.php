@@ -3,6 +3,7 @@
 namespace Msi\StoreBundle\Provider;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 class Provider
 {
@@ -18,29 +19,37 @@ class Provider
     public function getOrder()
     {
         if (!$this->order) {
-            $sc = $this->container->get('security.context');
-            $user = $sc->getToken()->getUser();
-            $orderManager = $this->container->get('msi_store.order_manager');
-
-            if ($sc->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-                $qb = $orderManager->getFindByQueryBuilder(
-                    [
-                        'a.user' => $user,
-                    ]
-                );
-
-                $qb->andWhere($qb->expr()->isNull('a.frozenAt'));
-
-                $this->order = $qb->getQuery()->getOneOrNullResult();
-
-                $this->order->setUser($user);
+            if (is_object($this->getUser())) {
+                $this->order = $this->getOrderManager()->findOrderByUser($this->getUser());
+            } else {
+                $this->order = $this->getOrderManager()->findOrderByCookie($this->container->get('request')->cookies->get('cao_order_id'));
             }
 
             if (!$this->order) {
-                $this->order = $orderManager->create();
+                $this->order = $this->getOrderManager()->create();
+                $this->getOrderManager()->update($this->order);
+                if (is_object($this->getUser())) {
+                    $this->order->setUser($this->getUser());
+                } else{
+                    $this->container->get('event_dispatcher')->addListener(KernelEvents::RESPONSE, [$this->container->get('msi_store.cookie_listener'), 'onKernelResponse']);
+                }
             }
         }
 
         return $this->order;
+    }
+
+    private function getUser()
+    {
+        if (is_object($this->container->get('security.context')->getToken())) {
+            return $this->container->get('security.context')->getToken()->getUser();
+        }
+
+        return null;
+    }
+
+    private function getOrderManager()
+    {
+        return $this->container->get('msi_store.order_manager');
     }
 }

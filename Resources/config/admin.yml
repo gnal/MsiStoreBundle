@@ -23,7 +23,7 @@ services:
             - { name: msi.admin }
 
     msi_store.order_manager:
-        class: %msi_cmf.manager.class%
+        class: Msi\StoreBundle\Doctrine\OrderManager
         arguments: [ %msi_store.order.class% ]
         parent: msi_cmf.manager
 
