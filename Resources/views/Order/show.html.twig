@@ -14,10 +14,10 @@
         <tr id="cart-product-{{ detail.product.id }}">
             <td>{{ detail.product.translation.name }}</td>
              <td class="span1">
-                <form style="margin: 0;" method="POST" action="#">
-                    <input type="text" class="msi_store_cart_edit span1" value="{{ detail.quantity }}" name="quantity">
-                    <a class="btn btn-mini" href="#"><i class="icon-refresh"></i></a>
-                    <a class="cao_app_order_detail_delete btn btn-mini" href="#"><i class="icon-trash"></i></a>
+                <form style="margin: 0;white-space: nowrap;" method="POST" action="{{ path('msi_store_detail_edit', {'id': detail.id}) }}" class="msi_store_detail_edit">
+                    <input type="text" class="span1" value="{{ detail.quantity }}" name="quantity">
+                    <a class="btn btn-small" href="#"><i class="icon-refresh"></i></a>
+                    <a class="msi_store_detail_delete btn btn-small" href="{{ path('msi_store_detail_delete', {'id': detail.id}) }}"><i class="icon-trash"></i></a>
                 </form>
             </td>
             <td class="detailTotal{{ detail.id }}">${#{{ order_strategy.getOrderDetailTotal(detail)|number_format(2) }}#}</td>
@@ -33,3 +33,8 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block js %}
+{{ parent() }}
+<script src="{{ asset('bundles/msistore/js/store.js') }}"></script>
+{% endblock js %}

@@ -36,17 +36,43 @@ class DetailController extends Controller
             $order->getDetails()->add($detail);
         }
 
-        if ($detail->getQuantity() > 999) {
-            $detail->setQuantity(999);
-        }
-
-        if ($detail->getQuantity() < 1) {
-            $detail->setQuantity(1);
-        }
-
         $order->setUpdatedAt(new \DateTime());
 
         $this->container->get('msi_store.order_manager')->update($order);
+
+        return $this->getResponse();
+    }
+
+    public function editAction()
+    {
+        $order = $this->container->get('msi_store.provider')->getOrder();
+
+        foreach ($order->getDetails() as $row) {
+            if ($row->getId() == $this->getRequest()->attributes->get('id')) {
+                $detail = $row;
+                break;
+            }
+        }
+
+        $detail->setQuantity($this->getRequest()->request->get('quantity'));
+
+        $this->container->get('msi_store.detail_manager')->update($detail);
+
+        return $this->getResponse();
+    }
+
+    public function deleteAction()
+    {
+        $order = $this->container->get('msi_store.provider')->getOrder();
+
+        foreach ($order->getDetails() as $row) {
+            if ($row->getId() == $this->getRequest()->attributes->get('id')) {
+                $detail = $row;
+                break;
+            }
+        }
+
+        $this->container->get('msi_store.detail_manager')->delete($detail);
 
         return $this->getResponse();
     }

@@ -66,6 +66,14 @@ abstract class Detail
 
     public function setQuantity($quantity)
     {
+        if ($quantity > 999) {
+            $quantity = 999;
+        }
+
+        if ($quantity < 1) {
+            $quantity = 1;
+        }
+
         $this->quantity = $quantity;
 
         return $this;
