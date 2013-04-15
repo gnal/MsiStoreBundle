@@ -17,3 +17,7 @@ msi_store_detail_delete:
 msi_store_product_index:
     pattern:  /product/list
     defaults: { _controller: MsiStoreBundle:Product:index }
+
+msi_store_product_show:
+    pattern:  /product/{id}
+    defaults: { _controller: MsiStoreBundle:Product:show }

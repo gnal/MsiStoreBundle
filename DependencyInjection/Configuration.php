@@ -37,6 +37,7 @@ class Configuration implements ConfigurationInterface
                     ->cannotBeEmpty()
                 ->end()
                 ->scalarNode('product_admin')->defaultValue('Msi\StoreBundle\Admin\ProductAdmin')->cannotBeEmpty()->end()
+                ->scalarNode('product_manager')->defaultValue('Msi\StoreBundle\Doctrine\ProductManager')->cannotBeEmpty()->end()
             ->end()
         ;
     }

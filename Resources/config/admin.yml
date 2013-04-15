@@ -10,7 +10,7 @@ services:
             - { name: msi.admin }
 
     msi_store.product_manager:
-        class: %msi_cmf.manager.class%
+        class: %msi_store.product.manager%
         arguments: [ %msi_store.product.class% ]
         parent: msi_cmf.manager
 

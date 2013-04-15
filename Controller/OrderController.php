@@ -10,6 +10,9 @@ class OrderController extends Controller
     {
         $order = $this->container->get('msi_store.provider')->getOrder();
 
-        return $this->render('MsiStoreBundle:Order:show.html.twig', ['order' => $order]);
+        return $this->render('MsiStoreBundle:Order:show.html.twig', [
+            'order' => $order,
+            'calculator' => $this->get('msi_store.calculator'),
+        ]);
     }
 }

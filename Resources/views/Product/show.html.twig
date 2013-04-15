@@ -1,0 +1,12 @@
+{% extends 'MsiStoreBundle::layout.html.twig' %}
+
+{% block title %}{{ product.translation.name }}{% endblock title %}
+
+{% block content %}
+blablabla
+{% endblock content %}
+
+{% block js %}
+{{ parent() }}
+<script src="{{ asset('bundles/msistore/js/store.js') }}"></script>
+{% endblock js %}

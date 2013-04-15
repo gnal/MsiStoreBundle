@@ -17,9 +17,7 @@
             });
 
             $('form.msi_store_detail_new').on('submit', function(e) {
-                if (self.fixQuantity($(this).find('input.qty')) !== 0) {
-                    self.addElement($(this));
-                }
+                self.addElement($(this));
                 e.preventDefault();
             });
 

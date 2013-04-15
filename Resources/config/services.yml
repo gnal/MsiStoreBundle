@@ -17,3 +17,7 @@ services:
         class: Msi\StoreBundle\EventListener\CookieListener
         arguments: [ @msi_store.provider ]
         scope: request
+
+    msi_store.calculator:
+        class: Msi\StoreBundle\Calculator\Calculator
+        arguments: [ @service_container ]
