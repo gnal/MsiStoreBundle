@@ -28,6 +28,10 @@ function nl(t){t.className=t.className.replace(new RegExp(/\shide|hide\s|hide/),
             {{ flashMessage }}
         </div>
     {% endfor %}
+    <div class="alert alert-success fade in" style="display: none;">
+        <a class="close" data-dismiss="alert" href="#">×</a>
+        <div>dada</div>
+    </div>
     <h2>{{ block('title') }}</h2>
     {{ block('page_content') }}
 </div>

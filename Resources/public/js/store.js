@@ -121,7 +121,7 @@
                 type: 'POST',
                 success: function(data) {
                     $('#cart-count').text(data.count);
-                    $('.alert').addClass('alert-success').children('div.message').html(data.flash);
+                    $('.alert').children('div').html(data.flash);
                     $('.alert').fadeIn(200);
                     $form.find('input.qty').val(0);
                 }
