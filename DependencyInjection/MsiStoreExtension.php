@@ -42,5 +42,7 @@ class MsiStoreExtension extends Extension
         $container->setParameter('msi_store.detail.admin', $config['detail_admin']);
 
         $container->setParameter('msi_store.product.manager', $config['product_manager']);
+
+        $container->setParameter('msi_store.calculator', $config['calculator_class']);
     }
 }

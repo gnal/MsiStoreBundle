@@ -26,10 +26,28 @@ abstract class Product implements TimestampableInterface, TranslatableInterface
      */
     protected $price;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $taxable;
+
     public function __construct()
     {
         $this->published = false;
+        $this->taxable = true;
         $this->translations = new ArrayCollection();
+    }
+
+    public function getTaxable()
+    {
+        return $this->taxable;
+    }
+
+    public function setTaxable($taxable)
+    {
+        $this->taxable = $taxable;
+
+        return $this;
     }
 
     public function getPrice()

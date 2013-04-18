@@ -25,6 +25,11 @@
                 self.editElement($(this));
             });
 
+            $('form.msi_store_detail_edit').on('submit', function(e) {
+                self.editElement($(this).find('input'));
+                e.preventDefault();
+            });
+
             self.$el.on('click', 'a.msi_store_detail_delete', function(e) {
                 self.removeElement($(this));
                 e.preventDefault();
@@ -51,7 +56,7 @@
                 data: $form.serialize(),
                 type: 'POST',
                 success: function(data) {
-                    $('#cart-count').text(data.count);
+                    $('.cart-count').text(data.count);
                     $('.alert').children('div').html(data.flash);
                     $('.alert').fadeIn(200);
                     $form.find('input.qty').val(0);
@@ -74,9 +79,9 @@
                 data: $this.closest('form').serialize(),
                 type: 'POST',
                 success: function(data) {
-                    $('#cart-count').text(data.count);
-                    $('#detailTotal'+data.id).html('$'+data.detailTotal);
-                    $('#orderSubTotal').html('$'+data.subTotal);
+                    $('.cart-count').text(data.count);
+                    $('.detailTotal'+data.id).html('$'+data.detailTotal);
+                    $('.orderSubtotal').html('$'+data.subtotal);
                 }
             });
         },
@@ -91,8 +96,8 @@
             $.ajax($this.attr('href'), {
                 success: function(data) {
                     $this.closest('tr').fadeOut(200);
-                    $('#cart-count').text(data.count);
-                    $('#orderSubTotal').html('$'+data.subTotal);
+                    $('.cart-count').text(data.count);
+                    $('.orderSubtotal').html('$'+data.subtotal);
                 }
             });
         },

@@ -20,6 +20,12 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('msi_store');
 
+        $rootNode
+            ->children()
+                ->scalarNode('calculator_class')->defaultValue('Msi\StoreBundle\Calculator\Calculator')->cannotBeEmpty()->end()
+            ->end()
+        ;
+
         $this->addProductSection($rootNode);
         $this->addOrderSection($rootNode);
         $this->addDetailSection($rootNode);

@@ -8,16 +8,8 @@ class OrderController extends Controller
 {
     public function showAction()
     {
-        $order = $this->container->get('msi_store.provider')->getOrder();
-
         return $this->render('MsiStoreBundle:Order:show.html.twig', [
-            'order' => $order,
             'calculator' => $this->get('msi_store.calculator'),
         ]);
-    }
-
-    public function checkoutAction()
-    {
-        return $this->render('MsiStoreBundle:Order:checkout.html.twig');
     }
 }

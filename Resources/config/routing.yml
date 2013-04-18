@@ -2,26 +2,26 @@ msi_store_order_show:
     pattern:  /cart
     defaults: { _controller: MsiStoreBundle:Order:show }
 
-msi_store_order_checkout:
-    pattern:  /checkout
-    defaults: { _controller: MsiStoreBundle:Order:checkout }
+msi_store_checkout_review:
+    pattern:  /review
+    defaults: { _controller: MsiStoreBundle:Checkout:review }
 
 msi_store_detail_new:
-    pattern:  /detail/new
+    pattern:  /details/new
     defaults: { _controller: MsiStoreBundle:Detail:new }
 
 msi_store_detail_edit:
-    pattern:  /detail/{id}/edit
+    pattern:  /details/{id}/edit
     defaults: { _controller: MsiStoreBundle:Detail:edit }
 
 msi_store_detail_delete:
-    pattern:  /detail/{id}/delete
+    pattern:  /details/{id}/delete
     defaults: { _controller: MsiStoreBundle:Detail:delete }
 
 msi_store_product_index:
-    pattern:  /product/list
+    pattern:  /products
     defaults: { _controller: MsiStoreBundle:Product:index }
 
 msi_store_product_show:
-    pattern:  /product/{id}
+    pattern:  /products/{id}
     defaults: { _controller: MsiStoreBundle:Product:show }

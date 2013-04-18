@@ -20,16 +20,20 @@
                     <a class="msi_store_detail_delete btn btn-small" href="{{ path('msi_store_detail_delete', {'id': detail.id}) }}"><i class="icon-trash"></i></a>
                 </form>
             </td>
-            <td class="detailTotal{{ detail.id }}">${#{{ order_strategy.getOrderDetailTotal(detail)|number_format(2) }}#}</td>
+            <td class="detailTotal{{ detail.id }}">${{ calculator.getDetailTotal(detail)|number_format(2) }}</td>
         </tr>
         {% else %}
         <tr>
             <td colspan=4>Vide</td>
         </tr>
         {% endfor %}
+        <tr>
+            <td colspan=2 style="text-align: right;">{{ 'Subtotal'|trans }}</td>
+            <td class="orderSubtotal">${{ calculator.getOrderSubtotal(order)|number_format(2) }}</td>
+        </tr>
     </table>
     <div class="text-right">
-        <a class="btn btn-primary btn-large" href="#">Checkout &raquo;</a>
+        <a class="btn btn-primary btn-large" href="{{ path('msi_store_checkout_review') }}">Checkout &raquo;</a>
     </div>
 </div>
 {% endblock content %}

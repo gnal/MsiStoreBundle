@@ -8,7 +8,7 @@ use Msi\StoreBundle\Entity\Detail;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class Calculator
+abstract class Calculator
 {
     private $container;
 
@@ -17,110 +17,69 @@ class Calculator
         $this->container = $container;
     }
 
+    abstract public function getPst();
+
+    abstract public function getGst();
+
+    abstract public function hasShipping(Order $order);
+
+    abstract public function getShipping();
+
     public function getDetailTotal(Detail $detail)
     {
         return $detail->getProduct()->getPrice() * $detail->getQuantity();
     }
 
-    // public function getOrderSubTotal(Order $order)
-    // {
-    //     $total = 0;
-    //     foreach ($order->getDetails() as $detail) {
-    //         $total += $this->getOrderDetailTotal($detail);
-    //     }
+    public function getOrderSubtotal(Order $order)
+    {
+        $total = 0;
+        foreach ($order->getDetails() as $detail) {
+            $total += $this->getDetailTotal($detail);
+        }
 
-    //     return $total;
-    // }
+        return $total;
+    }
 
-    // public function getOrderTotal(Order $order)
-    // {
-    //     $provider = $this->container->get('cao_app.provider');
+    public function getOrderGst(Order $order)
+    {
+        $total = 0;
+        foreach ($order->getDetails() as $detail) {
+            if ($detail->getProduct()->getTaxable()) {
+                $total += $this->getDetailTotal($detail) * $this->getGst();
+            }
+        }
 
-    //     $gst = $provider->getSetting('gst')->getValue();
-    //     $pst = $provider->getSetting('pst')->getValue();
+        if ($this->hasShipping($order)) {
+            $total += $this->getShipping() * $this->getGst();
+        }
 
-    //     $total = 0;
-    //     foreach ($order->getDetails() as $detail) {
-    //         if ($detail->getProduct()->getTaxable()) {
-    //             $total += $this->getOrderDetailTotal($detail) * (1 + $gst + $pst);
-    //         } else {
-    //             $total += $this->getOrderDetailTotal($detail);
-    //         }
-    //     }
+        return $total;
+    }
 
-    //     if ($this->hasShipping($order)) {
-    //         $total += $provider->getSetting('shipping')->getValue() * (1 + $gst + $pst);
-    //     }
+    public function getOrderPst(Order $order)
+    {
+        $total = 0;
+        foreach ($order->getDetails() as $detail) {
+            if ($detail->getProduct()->getTaxable()) {
+                $total += $this->getDetailTotal($detail) * $this->getPst();
+            }
+        }
 
-    //     return $total;
-    // }
+        if ($this->hasShipping($order)) {
+            $total += $this->getShipping() * $this->getPst();
+        }
 
-    // public function getOrderGst(Order $order)
-    // {
-    //     $provider = $this->container->get('cao_app.provider');
+        return $total;
+    }
 
-    //     $gst = $provider->getSetting('gst')->getValue();
+    public function getOrderTotal(Order $order)
+    {
+        $subtotal = $this->getOrderSubtotal($order);
+        $pst = $this->getOrderPst($order);
+        $gst = $this->getOrderGst($order);
 
-    //     $total = 0;
-    //     foreach ($order->getDetails() as $detail) {
-    //         if ($detail->getProduct()->getTaxable()) {
-    //             $total += $this->getOrderDetailTotal($detail) * $gst;
-    //         }
-    //     }
+        $total = $subtotal + $gst + $pst;
 
-    //     if ($this->hasShipping($order)) {
-    //         $total += $provider->getSetting('shipping')->getValue() * $gst;
-    //     }
-
-    //     return $total;
-    // }
-
-    // public function getOrderPst(Order $order)
-    // {
-    //     $provider = $this->container->get('cao_app.provider');
-
-    //     $pst = $provider->getSetting('pst')->getValue();
-
-    //     $total = 0;
-    //     foreach ($order->getDetails() as $detail) {
-    //         if ($detail->getProduct()->getTaxable()) {
-    //             $total += $this->getOrderDetailTotal($detail) * $pst;
-    //         }
-    //     }
-
-    //     if ($this->hasShipping($order)) {
-    //         $total += $provider->getSetting('shipping')->getValue() * $pst;
-    //     }
-
-    //     return $total;
-    // }
-
-    // public function getOrderDetailTotal(OrderDetail $detail)
-    // {
-    //     return $this->getInflatedBoxPrice($detail->getProduct()) * $detail->getQuantity();
-    // }
-
-    // public function getInflatedBoxPrice(Product $product)
-    // {
-    //     $user = $this->container->get('security.context')->getToken()->getUser();
-
-    //     // si le produit est en vente
-    //     if ($product->getSaleBoxPrice()) {
-    //         $total = $product->getSaleBoxPrice();
-    //     // sinon si le client a une liste de prix (ce qui devrait tjrs etre le cas apart pour genre un admin)
-    //     } elseif ($user->getPriceList()) {
-    //         $total = $product->getBoxPrice() * (1 + $user->getPriceList()->getValue());
-    //     } else {
-    //         $total = $product->getBoxPrice();
-    //     }
-
-    //     return $total;
-    // }
-
-    // public function hasShipping(Order $order)
-    // {
-    //     $provider = $this->container->get('cao_app.provider');
-
-    //     return $this->getOrderSubTotal($order) <= $provider->getSetting('prix_min_commande')->getValue();
-    // }
+        return $total;
+    }
 }

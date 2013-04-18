@@ -1,2 +1,3 @@
 entity:
     Product: Product|Products
+    Category: Category|Categories

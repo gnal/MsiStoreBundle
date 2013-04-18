@@ -113,6 +113,16 @@ abstract class Order implements TimestampableInterface
         $this->details = new ArrayCollection();
     }
 
+    public function count()
+    {
+        $total = 0;
+        foreach ($this->getDetails() as $detail) {
+            $total += $detail->getQuantity();
+        }
+
+        return $total;
+    }
+
     public function getUser()
     {
         return $this->user;

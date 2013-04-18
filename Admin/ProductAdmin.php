@@ -22,6 +22,8 @@ class ProductAdmin extends Admin
     {
         $builder
             ->add('price')
+            ->add('category')
+            ->add('taxable', 'checkbox')
         ;
     }
 

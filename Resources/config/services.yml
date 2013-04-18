@@ -19,5 +19,12 @@ services:
         scope: request
 
     msi_store.calculator:
-        class: Msi\StoreBundle\Calculator\Calculator
+        class: %msi_store.calculator%
         arguments: [ @service_container ]
+
+    msi_store.twig.extension:
+        class: Msi\StoreBundle\Twig\Extension\StoreExtension
+        arguments: [ @service_container ]
+        tags:
+            - { name: twig.extension }
+        public: false

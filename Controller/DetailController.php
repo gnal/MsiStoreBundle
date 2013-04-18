@@ -58,7 +58,11 @@ class DetailController extends Controller
 
         $this->container->get('msi_store.detail_manager')->update($detail);
 
-        return $this->getResponse();
+        return $this->getResponse([
+            'id' => $detail->getId(),
+            'detailTotal' => number_format($this->container->get('msi_store.calculator')->getDetailTotal($detail), 2),
+            'subtotal' => number_format($this->container->get('msi_store.calculator')->getOrderSubtotal($order), 2),
+        ]);
     }
 
     public function deleteAction()
@@ -74,7 +78,9 @@ class DetailController extends Controller
 
         $this->container->get('msi_store.detail_manager')->delete($detail);
 
-        return $this->getResponse();
+        return $this->getResponse([
+            'subtotal' => number_format($this->container->get('msi_store.calculator')->getOrderSubtotal($order), 2),
+        ]);
     }
 
     private function getResponse($data = [])
@@ -83,7 +89,7 @@ class DetailController extends Controller
 
         if ($this->container->get('request')->isXmlHttpRequest()) {
             $redundant = [
-                'count' => $order->getDetails()->count(),
+                'count' => $order->count(),
                 'flash' => '<strong>Succès</strong> : Le produit a été ajouté à <a href="'.$this->container->get('router')->generate('msi_store_order_show').'">votre panier</a> !',
             ];
             $data = array_merge($redundant, $data);

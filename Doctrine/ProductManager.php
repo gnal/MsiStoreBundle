@@ -6,14 +6,17 @@ use Msi\CmfBundle\Doctrine\Manager as BaseManager;
 
 class ProductManager extends BaseManager
 {
-    public function findProducts()
+    public function getFindProductsQueryBuilder()
     {
         $qb = $this->getFindByQueryBuilder(
             [
                 'a.published' => true,
+            ],
+            [
+                'a.category' => 'c',
             ]
         );
 
-        return $qb->getQuery()->execute();
+        return $qb;
     }
 }
