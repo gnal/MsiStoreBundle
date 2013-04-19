@@ -15,7 +15,11 @@ class CheckoutController extends Controller
             ->add('lastName')
             ->add('email', 'email')
             ->add('phone')
-            ->add('ext')
+            ->add('ext', 'text', [
+                'attr' => [
+                    'style' => 'width: 60px;',
+                ],
+            ])
             ->add('shippingCity')
             ->add('shippingAddress')
             ->add('shippingAddress2')
@@ -79,7 +83,7 @@ class CheckoutController extends Controller
                 ;
                 $this->container->get('msi_store.order_manager')->update($order);
 
-                return $this->redirect($this->generateUrl('msi_store_checkout_payment'));
+                return $this->redirect($this->generateUrl('msi_store_checkout_review'));
             }
         }
 
@@ -88,8 +92,17 @@ class CheckoutController extends Controller
         ]);
     }
 
+    public function reviewAction()
+    {
+        return $this->render('MsiStoreBundle:Checkout:review.html.twig', [
+            'calculator' => $this->get('msi_store.calculator'),
+        ]);
+    }
+
     public function paymentAction()
     {
+        // todo: payment
+
         // if ($this->getRequest()->isMethod('POST')) {
         //     $form->bind($this->getRequest());
         //     if ($form->isValid()) {
@@ -129,6 +142,7 @@ class CheckoutController extends Controller
             $detail
                 ->setName($product->getTranslation()->getName())
                 ->setPrice($product->getPrice())
+                ->setTaxable($product->getTaxable())
                 ->setTotal($this->get('msi_store.calculator')->getDetailTotal($detail))
             ;
         }

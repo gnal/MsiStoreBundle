@@ -138,6 +138,67 @@ abstract class Order implements TimestampableInterface
         return $total;
     }
 
+    public function getSubtotal()
+    {
+        $this->checkFrozenAt();
+
+        $total = 0;
+        foreach ($this->getDetails() as $detail) {
+            $total += $detail->getTotal();
+        }
+
+        return $total;
+    }
+
+    public function getGstTotal()
+    {
+        $this->checkFrozenAt();
+
+        $total = 0;
+        foreach ($this->getDetails() as $detail) {
+            if ($detail->getTaxable()) {
+                $total += $detail->getTotal() * $this->getGst();
+            }
+        }
+
+        if ($this->shipping) {
+            $total += $this->shipping * $this->getGst();
+        }
+
+        return $total;
+    }
+
+    public function getPstTotal()
+    {
+        $this->checkFrozenAt();
+
+        $total = 0;
+        foreach ($this->getDetails() as $detail) {
+            if ($detail->getTaxable()) {
+                $total += $detail->getTotal() * $this->getPst();
+            }
+        }
+
+        if ($this->shipping) {
+            $total += $this->shipping * $this->getPst();
+        }
+
+        return $total;
+    }
+
+    public function getTotal()
+    {
+        $this->checkFrozenAt();
+
+        $subtotal = $this->getSubtotal();
+        $pst = $this->getPst();
+        $gst = $this->getGst();
+
+        $total = $subtotal + $gst + $pst;
+
+        return $total;
+    }
+
     public function getShipping()
     {
         return $this->shipping;
@@ -429,5 +490,12 @@ abstract class Order implements TimestampableInterface
         $this->ip = $ip;
 
         return $this;
+    }
+
+    private function checkFrozenAt()
+    {
+        if ($this->frozenAt === null) {
+            throw new \Exception('Order isn\'t frozen. Use the Caculator service instead.');
+        }
     }
 }

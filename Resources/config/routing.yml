@@ -2,6 +2,10 @@ msi_store_order_show:
     pattern:  /cart
     defaults: { _controller: MsiStoreBundle:Order:show }
 
+msi_store_checkout_review:
+    pattern:  /review
+    defaults: { _controller: MsiStoreBundle:Checkout:review }
+
 msi_store_checkout_address:
     pattern:  /address
     defaults: { _controller: MsiStoreBundle:Checkout:address }

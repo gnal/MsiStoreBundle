@@ -3,7 +3,7 @@
 {% block title %}{{ 'Address'|trans }}{% endblock title %}
 
 {% block content %}
-<form action="{{ path('msi_store_checkout_address') }}" method="POST" class="well">
+<form action="{{ path('msi_store_checkout_address') }}" method="POST">
 {{ form_widget(form) }}
 <button type=submit class="btn">Submit</button>
 </form>

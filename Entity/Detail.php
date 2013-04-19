@@ -21,6 +21,11 @@ abstract class Detail
     protected $quantity;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $taxable;
+
+    /**
      * @ORM\Column(type="decimal", scale=2, nullable=true)
      */
     protected $price;
@@ -29,6 +34,18 @@ abstract class Detail
      * @ORM\Column(type="decimal", scale=2, nullable=true)
      */
     protected $total;
+
+    public function getTaxable()
+    {
+        return $this->taxable;
+    }
+
+    public function setTaxable($taxable)
+    {
+        $this->taxable = $taxable;
+
+        return $this;
+    }
 
     public function getPrice()
     {
