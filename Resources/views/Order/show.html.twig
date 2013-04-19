@@ -28,12 +28,28 @@
         </tr>
         {% endfor %}
         <tr>
-            <td colspan=2 style="text-align: right;">{{ 'Subtotal'|trans }}</td>
+            <td colspan=2 style="text-align: right;"><strong>{{ 'Subtotal'|trans }}</strong></td>
             <td class="orderSubtotal">${{ calculator.getOrderSubtotal(order)|number_format(2) }}</td>
+        </tr>
+        <tr>
+            <td colspan=2 style="text-align:right;"><strong>{{ 'Shipping'|trans }}</strong></td>
+            <td>${{ calculator.getShipping|number_format(2) }}</td>
+        </tr>
+        <tr>
+            <td colspan=2 style="text-align:right;"><strong>GST ({{ calculator.getGst * 100 }}%)</strong></td>
+            <td>${{ calculator.getOrderGst(order)|number_format(2) }}</td>
+        </tr>
+        <tr>
+            <td colspan=2 style="text-align:right;"><strong>PST ({{ calculator.getPst * 100 }}%)</strong></td>
+            <td>${{ calculator.getOrderPst(order)|number_format(2) }}</td>
+        </tr>
+        <tr>
+            <td colspan=2 style="text-align:right;"><strong>Total</strong></td>
+            <td>${{ calculator.getOrderTotal(order)|number_format(2) }}</td>
         </tr>
     </table>
     <div class="text-right">
-        <a class="btn btn-primary btn-large" href="{{ path('msi_store_checkout_review') }}">Checkout &raquo;</a>
+        <a class="btn btn-primary btn-large" href="{{ path('msi_store_checkout_address') }}">Checkout &raquo;</a>
     </div>
 </div>
 {% endblock content %}
