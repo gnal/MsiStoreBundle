@@ -1,3 +1,5 @@
 entity:
     Product: Product|Products
     Category: Category|Categories
+    Order: Order|Orders
+    Detail: Detail|Details

@@ -492,6 +492,11 @@ abstract class Order implements TimestampableInterface
         return $this;
     }
 
+    public function __toString()
+    {
+        return (string) '#'.$this->id;
+    }
+
     private function checkFrozenAt()
     {
         if ($this->frozenAt === null) {

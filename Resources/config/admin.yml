@@ -21,6 +21,8 @@ services:
         parent: msi_cmf.admin
         tags:
             - { name: msi.admin }
+        calls:
+            - [ addChild, [ @msi_store_detail_admin ] ]
 
     msi_store.order_manager:
         class: Msi\StoreBundle\Doctrine\OrderManager
@@ -47,6 +49,8 @@ services:
         parent: msi_cmf.admin
         tags:
             - { name: msi.admin }
+        calls:
+            - [ setParent, [ @msi_store_order_admin ] ]
 
     msi_store.detail_manager:
         class: %msi_cmf.manager.class%

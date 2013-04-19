@@ -12,6 +12,7 @@ class OrderAdmin extends Admin
     {
         $builder
             ->add('id')
+            ->add('frozenAt', 'date')
             ->add('', 'action')
         ;
     }
@@ -19,7 +20,23 @@ class OrderAdmin extends Admin
     public function buildForm(FormBuilder $builder)
     {
         $builder
-            ->add('name')
+            ->add('firstName')
+            ->add('lastName')
+            ->add('email')
+            ->add('phone')
+            ->add('ext')
+            ->add('shippingCity')
+            ->add('shippingAddress')
+            ->add('shippingAddress2')
+            ->add('shippingProvince')
+            ->add('shippingCountry')
+            ->add('shippingZip')
+            ->add('billingCity')
+            ->add('billingAddress')
+            ->add('billingAddress2')
+            ->add('billingProvince')
+            ->add('billingCountry')
+            ->add('billingZip')
         ;
     }
 }
