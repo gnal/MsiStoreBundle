@@ -10,6 +10,10 @@ msi_store_checkout_payment:
     pattern:  /payment
     defaults: { _controller: MsiStoreBundle:Checkout:payment }
 
+msi_store_checkout_confirmation:
+    pattern:  /confirmation
+    defaults: { _controller: MsiStoreBundle:Checkout:confirmation }
+
 msi_store_detail_new:
     pattern:  /details/new
     defaults: { _controller: MsiStoreBundle:Detail:new }

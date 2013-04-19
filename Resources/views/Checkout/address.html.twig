@@ -1,9 +1,10 @@
 {% extends 'MsiStoreBundle::layout.html.twig' %}
 
-{% block title %}Address{% endblock title %}
+{% block title %}{{ 'Address'|trans }}{% endblock title %}
 
 {% block content %}
-<form>
+<form action="{{ path('msi_store_checkout_address') }}" method="POST" class="well">
 {{ form_widget(form) }}
+<button type=submit class="btn">Submit</button>
 </form>
 {% endblock content %}

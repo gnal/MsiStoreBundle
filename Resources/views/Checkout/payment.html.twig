@@ -1,56 +1,8 @@
 {% extends 'MsiStoreBundle::layout.html.twig' %}
 
-{% block title %}{{ 'Checkout'|trans }}{% endblock title %}
+{% block title %}{{ 'Payment'|trans }}{% endblock title %}
 
 {% block content %}
-<div class="well">
-    <table class="table table-bordered">
-        <tr>
-            <th>Product</th>
-            <th>Qty</th>
-            <th>Total</th>
-        </tr>
-        {% for detail in order.details %}
-        <tr id="cart-product-{{ detail.product.id }}">
-            <td>{{ detail.product.translation.name }}</td>
-             <td class="span1">
-                {{ detail.quantity }}
-            </td>
-            <td class="detailTotal{{ detail.id }}">${{ calculator.getDetailTotal(detail)|number_format(2) }}</td>
-        </tr>
-        {% else %}
-        <tr>
-            <td colspan=4>Vide</td>
-        </tr>
-        {% endfor %}
-        <tr>
-            <td colspan=2 style="text-align: right;"><strong>{{ 'Subtotal'|trans }}</strong></td>
-            <td class="orderSubtotal">${{ calculator.getOrderSubtotal(order)|number_format(2) }}</td>
-        </tr>
-        <tr>
-            <td colspan=2 style="text-align:right;"><strong>{{ 'Shipping'|trans }}</strong></td>
-            <td>${{ 0|number_format(2) }}</td>
-        </tr>
-        <tr>
-            <td colspan=2 style="text-align:right;"><strong>GST ({{ calculator.getGst * 100 }}%)</strong></td>
-            <td>${{ calculator.getOrderGst(order)|number_format(2) }}</td>
-        </tr>
-        <tr>
-            <td colspan=2 style="text-align:right;"><strong>PST ({{ calculator.getPst * 100 }}%)</strong></td>
-            <td>${{ calculator.getOrderPst(order)|number_format(2) }}</td>
-        </tr>
-        <tr>
-            <td colspan=2 style="text-align:right;"><strong>Total</strong></td>
-            <td>${{ calculator.getOrderTotal(order)|number_format(2) }}</td>
-        </tr>
-    </table>
-    <div class="row-fluid">
-        <div class="span6 text-left">
-            <a class="btn btn-large" href="{{ path('msi_store_product_index') }}">&laquo; Retour au panier</a>
-        </div>
-        <div class="span6 text-right">
-            <a class="btn btn-primary btn-large" href="{{ path('msi_store_checkout_payment') }}">Continue &raquo;</a>
-        </div>
-    </div>
-</div>
+salut paye moi
+<form action="{{ path('msi_store_checkout_payment') }}" method="POST"><button type=submit>Submit</button></form>
 {% endblock content %}

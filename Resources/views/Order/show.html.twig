@@ -37,15 +37,15 @@
         </tr>
         <tr>
             <td colspan=2 style="text-align:right;"><strong>GST ({{ calculator.getGst * 100 }}%)</strong></td>
-            <td>${{ calculator.getOrderGst(order)|number_format(2) }}</td>
+            <td class="orderGst">${{ calculator.getOrderGst(order)|number_format(2) }}</td>
         </tr>
         <tr>
             <td colspan=2 style="text-align:right;"><strong>PST ({{ calculator.getPst * 100 }}%)</strong></td>
-            <td>${{ calculator.getOrderPst(order)|number_format(2) }}</td>
+            <td class="orderPst">${{ calculator.getOrderPst(order)|number_format(2) }}</td>
         </tr>
         <tr>
             <td colspan=2 style="text-align:right;"><strong>Total</strong></td>
-            <td>${{ calculator.getOrderTotal(order)|number_format(2) }}</td>
+            <td class="orderTotal">${{ calculator.getOrderTotal(order)|number_format(2) }}</td>
         </tr>
     </table>
     <div class="text-right">

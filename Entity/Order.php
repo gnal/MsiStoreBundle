@@ -24,6 +24,21 @@ abstract class Order implements TimestampableInterface
     protected $frozenAt;
 
     /**
+     * @ORM\Column(type="decimal", scale=2, nullable=true)
+     */
+    protected $shipping;
+
+    /**
+     * @ORM\Column(type="decimal", scale=3, nullable=true)
+     */
+    protected $gst;
+
+    /**
+     * @ORM\Column(type="decimal", scale=3, nullable=true)
+     */
+    protected $pst;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
      */
     protected $firstName;
@@ -121,6 +136,42 @@ abstract class Order implements TimestampableInterface
         }
 
         return $total;
+    }
+
+    public function getShipping()
+    {
+        return $this->shipping;
+    }
+
+    public function setShipping($shipping)
+    {
+        $this->shipping = $shipping;
+
+        return $this;
+    }
+
+    public function getGst()
+    {
+        return $this->gst;
+    }
+
+    public function setGst($gst)
+    {
+        $this->gst = $gst;
+
+        return $this;
+    }
+
+    public function getPst()
+    {
+        return $this->pst;
+    }
+
+    public function setPst($pst)
+    {
+        $this->pst = $pst;
+
+        return $this;
     }
 
     public function getUser()
@@ -364,6 +415,18 @@ abstract class Order implements TimestampableInterface
     public function setBillingZip($billingZip)
     {
         $this->billingZip = $billingZip;
+
+        return $this;
+    }
+
+    public function getIp()
+    {
+        return $this->ip;
+    }
+
+    public function setIp($ip)
+    {
+        $this->ip = $ip;
 
         return $this;
     }

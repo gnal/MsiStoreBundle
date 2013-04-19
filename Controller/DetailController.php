@@ -29,8 +29,6 @@ class DetailController extends Controller
         } else {
             $detail = $this->get('msi_store.detail_manager')->create();
             $detail->setProduct($product);
-            $detail->setPrice($product->getPrice());
-            $detail->setName($product->getTranslation()->getName());
             $detail->setQuantity($this->getRequest()->request->get('quantity'));
             $detail->setOrder($order);
             $order->getDetails()->add($detail);
@@ -62,6 +60,9 @@ class DetailController extends Controller
             'id' => $detail->getId(),
             'detailTotal' => number_format($this->container->get('msi_store.calculator')->getDetailTotal($detail), 2),
             'subtotal' => number_format($this->container->get('msi_store.calculator')->getOrderSubtotal($order), 2),
+            'total' => number_format($this->container->get('msi_store.calculator')->getOrderTotal($order), 2),
+            'gst' => number_format($this->container->get('msi_store.calculator')->getOrderGst($order), 2),
+            'pst' => number_format($this->container->get('msi_store.calculator')->getOrderPst($order), 2),
         ]);
     }
 

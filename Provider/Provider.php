@@ -27,12 +27,12 @@ class Provider
 
             if (!$this->order) {
                 $this->order = $this->getOrderManager()->create();
-                $this->getOrderManager()->update($this->order);
                 if (is_object($this->getUser())) {
                     $this->order->setUser($this->getUser());
                 } else{
                     $this->container->get('event_dispatcher')->addListener(KernelEvents::RESPONSE, [$this->container->get('msi_store.cookie_listener'), 'onKernelResponse']);
                 }
+                $this->getOrderManager()->update($this->order);
             }
         }
 
@@ -41,11 +41,19 @@ class Provider
 
     private function getUser()
     {
-        if (is_object($this->container->get('security.context')->getToken())) {
-            return $this->container->get('security.context')->getToken()->getUser();
+        if (!$this->container->has('security.context')) {
+            throw new \LogicException('The SecurityBundle is not registered in your application.');
         }
 
-        return null;
+        if (null === $token = $this->container->get('security.context')->getToken()) {
+            return null;
+        }
+
+        if (!is_object($user = $token->getUser())) {
+            return null;
+        }
+
+        return $user;
     }
 
     private function getOrderManager()

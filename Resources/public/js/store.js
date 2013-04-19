@@ -82,6 +82,9 @@
                     $('.cart-count').text(data.count);
                     $('.detailTotal'+data.id).html('$'+data.detailTotal);
                     $('.orderSubtotal').html('$'+data.subtotal);
+                    $('.orderPst').html('$'+data.pst);
+                    $('.orderGst').html('$'+data.gst);
+                    $('.orderTotal').html('$'+data.total);
                 }
             });
         },

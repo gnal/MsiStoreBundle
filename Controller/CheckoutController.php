@@ -6,15 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class CheckoutController extends Controller
 {
-    // 1 address
     public function addressAction()
     {
-        // faire un form pis mettre les infos du user sil est logger ou lui suggerer de logger
         $builder = $this->get('form.factory')->createBuilder();
 
         $builder
             ->add('firstName')
             ->add('lastName')
+            ->add('email', 'email')
             ->add('phone')
             ->add('ext')
             ->add('shippingCity')
@@ -37,6 +36,7 @@ class CheckoutController extends Controller
             $form->setData([
                 'firstName' => $this->getUser()->getFirstName(),
                 'lastName' => $this->getUser()->getLastName(),
+                'email' => $this->getUser()->getEmail(),
                 'phone' => $this->getUser()->getPhone(),
                 'ext' => $this->getUser()->getExt(),
                 'shippingCity' => $this->getUser()->getShippingCity(),
@@ -54,26 +54,85 @@ class CheckoutController extends Controller
             ]);
         }
 
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+                $order = $this->get('msi_store.provider')->getOrder();
+                $order
+                    ->setFirstName($form->getData()['firstName'])
+                    ->setLastName($form->getData()['lastName'])
+                    ->setEmail($form->getData()['email'])
+                    ->setPhone($form->getData()['phone'])
+                    ->setExt($form->getData()['ext'])
+                    ->setShippingCity($form->getData()['shippingCity'])
+                    ->setShippingAddress($form->getData()['shippingAddress'])
+                    ->setShippingAddress2($form->getData()['shippingAddress2'])
+                    ->setShippingProvince($form->getData()['shippingProvince'])
+                    ->setShippingCountry($form->getData()['shippingCountry'])
+                    ->setShippingZip($form->getData()['shippingZip'])
+                    ->setBillingCity($form->getData()['billingCity'])
+                    ->setBillingAddress($form->getData()['billingAddress'])
+                    ->setBillingAddress2($form->getData()['billingAddress2'])
+                    ->setBillingProvince($form->getData()['billingProvince'])
+                    ->setBillingCountry($form->getData()['billingCountry'])
+                    ->setBillingZip($form->getData()['billingZip'])
+                ;
+                $this->container->get('msi_store.order_manager')->update($order);
+
+                return $this->redirect($this->generateUrl('msi_store_checkout_payment'));
+            }
+        }
+
         return $this->render('MsiStoreBundle:Checkout:address.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
-    // 2 payment
     public function paymentAction()
     {
+        // if ($this->getRequest()->isMethod('POST')) {
+        //     $form->bind($this->getRequest());
+        //     if ($form->isValid()) {
+        //         $this->freezeOrder();
+
+        //         return $this->redirect($this->generateUrl('msi_store_checkout_confirmation'));
+        //     }
+        // }
+
+        if ($this->getRequest()->isMethod('POST')) {
+            $this->freezeOrder();
+
+            return $this->redirect($this->generateUrl('msi_store_checkout_confirmation'));
+        }
+
         return $this->render('MsiStoreBundle:Checkout:payment.html.twig');
     }
 
-    // 3 process
-    public function processAction()
-    {
-        return $this->render('MsiStoreBundle:Checkout:payment.html.twig');
-    }
-
-    // 4 confirmation
     public function confirmationAction()
     {
-        return $this->render('MsiStoreBundle:Checkout:payment.html.twig');
+        return $this->render('MsiStoreBundle:Checkout:confirmation.html.twig');
+    }
+
+    private function freezeOrder()
+    {
+        $order = $this->get('msi_store.provider')->getOrder();
+        $order
+            ->setFrozenAt(new \DateTime())
+            ->setIp($this->getRequest()->getClientIp())
+            ->setShipping($this->get('msi_store.calculator')->getShipping())
+            ->setPst($this->get('msi_store.calculator')->getPst())
+            ->setGst($this->get('msi_store.calculator')->getGst())
+        ;
+
+        foreach ($order->getDetails() as $detail) {
+            $product = $detail->getProduct();
+            $detail
+                ->setName($product->getTranslation()->getName())
+                ->setPrice($product->getPrice())
+                ->setTotal($this->get('msi_store.calculator')->getDetailTotal($detail))
+            ;
+        }
+
+        $this->container->get('msi_store.order_manager')->update($order);
     }
 }
