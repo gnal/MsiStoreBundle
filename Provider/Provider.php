@@ -29,10 +29,11 @@ class Provider
                 $this->order = $this->getOrderManager()->create();
                 if (is_object($this->getUser())) {
                     $this->order->setUser($this->getUser());
+                    $this->getOrderManager()->update($this->order);
                 } else{
+                    $this->getOrderManager()->update($this->order);
                     $this->container->get('event_dispatcher')->addListener(KernelEvents::RESPONSE, [$this->container->get('msi_store.cookie_listener'), 'onKernelResponse']);
                 }
-                $this->getOrderManager()->update($this->order);
             }
         }
 
