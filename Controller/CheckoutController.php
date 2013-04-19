@@ -36,27 +36,25 @@ class CheckoutController extends Controller
 
         $form = $builder->getForm();
 
-        if ($this->getUser()) {
-            $form->setData([
-                'firstName' => $this->getUser()->getFirstName(),
-                'lastName' => $this->getUser()->getLastName(),
-                'email' => $this->getUser()->getEmail(),
-                'phone' => $this->getUser()->getPhone(),
-                'ext' => $this->getUser()->getExt(),
-                'shippingCity' => $this->getUser()->getShippingCity(),
-                'shippingAddress' => $this->getUser()->getShippingAddress(),
-                'shippingAddress2' => $this->getUser()->getShippingAddress2(),
-                'shippingProvince' => $this->getUser()->getShippingProvince(),
-                'shippingCountry' => $this->getUser()->getShippingCountry(),
-                'shippingZip' => $this->getUser()->getShippingZip(),
-                'billingCity' => $this->getUser()->getBillingCity(),
-                'billingAddress' => $this->getUser()->getBillingAddress(),
-                'billingAddress2' => $this->getUser()->getBillingAddress2(),
-                'billingProvince' => $this->getUser()->getBillingProvince(),
-                'billingCountry' => $this->getUser()->getBillingCountry(),
-                'billingZip' => $this->getUser()->getBillingZip(),
-            ]);
-        }
+        $form->setData([
+            'firstName' => $order->getFirstName() ?: $this->getUser() ? $this->getUser()->getFirstName() : null,
+            'lastName' => $order->getLastName() ?: $this->getUser() ? $this->getUser()->getLastName() : null,
+            'email' => $order->getEmail() ?: $this->getUser() ? $this->getUser()->getEmail() : null,
+            'phone' => $order->getPhone() ?: $this->getUser() ? $this->getUser()->getPhone() : null,
+            'ext' => $order->getExt() ?: $this->getUser() ? $this->getUser()->getExt() : null,
+            'shippingCity' => $order->getShippingCity() ?: $this->getUser() ? $this->getUser()->getShippingCity() : null,
+            'shippingAddress' => $order->getShippingAddress() ?: $this->getUser() ? $this->getUser()->getShippingAddress() : null,
+            'shippingAddress2' => $order->getShippingAddress2() ?: $this->getUser() ? $this->getUser()->getShippingAddress2() : null,
+            'shippingProvince' => $order->getShippingProvince() ?: $this->getUser() ? $this->getUser()->getShippingProvince() : null,
+            'shippingCountry' => $order->getShippingCountry() ?: $this->getUser() ? $this->getUser()->getShippingCountry() : null,
+            'shippingZip' => $order->getShippingZip() ?: $this->getUser() ? $this->getUser()->getShippingZip() : null,
+            'billingCity' => $order->getBillingCity() ?: $this->getUser() ? $this->getUser()->getBillingCity() : null,
+            'billingAddress' => $order->getBillingAddress() ?: $this->getUser() ? $this->getUser()->getBillingAddress() : null,
+            'billingAddress2' => $order->getBillingAddress2() ?: $this->getUser() ? $this->getUser()->getBillingAddress2() : null,
+            'billingProvince' => $order->getBillingProvince() ?: $this->getUser() ? $this->getUser()->getBillingProvince() : null,
+            'billingCountry' => $order->getBillingCountry() ?: $this->getUser() ? $this->getUser()->getBillingCountry() : null,
+            'billingZip' => $order->getBillingZip() ?: $this->getUser() ? $this->getUser()->getBillingZip() : null,
+        ]);
 
         if ($this->getRequest()->isMethod('POST')) {
             $form->bind($this->getRequest());
