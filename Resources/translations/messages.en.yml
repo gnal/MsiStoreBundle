@@ -3,3 +3,21 @@ entity:
     Category: Category|Categories
     Order: Order|Orders
     Detail: Detail|Details
+
+Firstname: First name
+Lastname: last name
+Email: Email
+Phone: Phone
+Ext: Ext.
+Shippingcity: City
+Shippingaddress: Address
+Shippingaddress2: Address 2
+Shippingprovince: Province
+Shippingcountry: Country
+Shippingzip: Postal code
+Billingcity: City
+Billingaddress: Address
+Billingaddress2: Address 2
+Billingprovince: Province
+Billingcountry: Country
+Billingzip: Postal code

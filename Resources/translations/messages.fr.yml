@@ -3,3 +3,21 @@ entity:
     Category: Catégorie|Catégories
     Order: Commande|Commandes
     Detail: Détail|Détails
+
+Firstname: Prénom
+Lastname: Nom
+Email: Courriel
+Phone: Téléphone
+Ext: Ext.
+Shippingcity: Ville
+Shippingaddress: Adresse
+Shippingaddress2: Adresse 2
+Shippingprovince: Province
+Shippingcountry: Pays
+Shippingzip: Code postal
+Billingcity: Ville
+Billingaddress: Adresse
+Billingaddress2: Adresse 2
+Billingprovince: Province
+Billingcountry: Pays
+Billingzip: Code postal
