@@ -35,6 +35,7 @@ class CheckoutController extends Controller
         ;
 
         $form = $builder->getForm();
+        $order = $this->get('msi_store.provider')->getOrder();
 
         $form->setData([
             'firstName' => $order->getFirstName() ?: $this->getUser() ? $this->getUser()->getFirstName() : null,
@@ -59,7 +60,6 @@ class CheckoutController extends Controller
         if ($this->getRequest()->isMethod('POST')) {
             $form->bind($this->getRequest());
             if ($form->isValid()) {
-                $order = $this->get('msi_store.provider')->getOrder();
                 $order
                     ->setFirstName($form->getData()['firstName'])
                     ->setLastName($form->getData()['lastName'])
