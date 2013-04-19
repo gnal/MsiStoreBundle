@@ -35,26 +35,83 @@ class CheckoutController extends Controller
         ;
 
         $form = $builder->getForm();
+
+        $firstName = null;
+        $lastName = null;
+        $email = null;
+        $phone = null;
+        $ext = null;
+        $shippingCity = null;
+        $shippingAddress = null;
+        $shippingAddress2 = null;
+        $shippingProvince = null;
+        $shippingCountry = null;
+        $shippingZip = null;
+        $billingCity = null;
+        $billingAddress = null;
+        $billingAddress2 = null;
+        $billingProvince = null;
+        $billingCountry = null;
+        $billingZip = null;
+
+        if ($this->getUser()) {
+            $firstName = $this->getUser()->getFirstName();
+            $lastName = $this->getUser()->getLastName();
+            $email = $this->getUser()->getEmail();
+            $phone = $this->getUser()->getPhone();
+            $ext = $this->getUser()->getExt();
+            $shippingCity = $this->getUser()->getShippingCity();
+            $shippingAddress = $this->getUser()->getShippingAddress();
+            $shippingAddress2 = $this->getUser()->getShippingAddress2();
+            $shippingProvince = $this->getUser()->getShippingProvince();
+            $shippingCountry = $this->getUser()->getShippingCountry();
+            $shippingZip = $this->getUser()->getShippingZip();
+            $billingCity = $this->getUser()->getBillingCity();
+            $billingAddress = $this->getUser()->getBillingAddress();
+            $billingAddress2 = $this->getUser()->getBillingAddress2();
+            $billingProvince = $this->getUser()->getBillingProvince();
+            $billingCountry = $this->getUser()->getBillingCountry();
+            $billingZip = $this->getUser()->getBillingZip();
+        }
+
         $order = $this->get('msi_store.provider')->getOrder();
 
+        if ($order->getFirstName() !== null) $firstName = $order->getFirstName();
+        if ($order->getLastName() !== null) $lastName = $order->getLastName();
+        if ($order->getEmail() !== null) $email = $order->getEmail();
+        if ($order->getPhone() !== null) $phone = $order->getPhone();
+        if ($order->getExt() !== null) $ext = $order->getExt();
+        if ($order->getShippingCity() !== null) $shippingCity = $order->getShippingCity();
+        if ($order->getShippingAddress() !== null) $shippingAddress = $order->getShippingAddress();
+        if ($order->getShippingAddress2() !== null) $shippingAddress2 = $order->getShippingAddress2();
+        if ($order->getShippingProvince() !== null) $shippingProvince = $order->getShippingProvince();
+        if ($order->getShippingCountry() !== null) $shippingCountry = $order->getShippingCountry();
+        if ($order->getShippingZip() !== null) $shippingZip = $order->getShippingZip();
+        if ($order->getBillingCity() !== null) $billingCity = $order->getBillingCity();
+        if ($order->getBillingAddress() !== null) $billingAddress = $order->getBillingAddress();
+        if ($order->getBillingAddress2() !== null) $billingAddress2 = $order->getBillingAddress2();
+        if ($order->getBillingProvince() !== null) $billingProvince = $order->getBillingProvince();
+        if ($order->getBillingCountry() !== null) $billingCountry = $order->getBillingCountry();
+        if ($order->getBillingZip() !== null) $billingZip = $order->getBillingZip();
+
         $form->setData([
-            'firstName' => $order->getFirstName() ?: $this->getUser() ? $this->getUser()->getFirstName() : null,
-            'lastName' => $order->getLastName() ?: $this->getUser() ? $this->getUser()->getLastName() : null,
-            'email' => $order->getEmail() ?: $this->getUser() ? $this->getUser()->getEmail() : null,
-            'phone' => $order->getPhone() ?: $this->getUser() ? $this->getUser()->getPhone() : null,
-            'ext' => $order->getExt() ?: $this->getUser() ? $this->getUser()->getExt() : null,
-            'shippingCity' => $order->getShippingCity() ?: $this->getUser() ? $this->getUser()->getShippingCity() : null,
-            'shippingAddress' => $order->getShippingAddress() ?: $this->getUser() ? $this->getUser()->getShippingAddress() : null,
-            'shippingAddress2' => $order->getShippingAddress2() ?: $this->getUser() ? $this->getUser()->getShippingAddress2() : null,
-            'shippingProvince' => $order->getShippingProvince() ?: $this->getUser() ? $this->getUser()->getShippingProvince() : null,
-            'shippingCountry' => $order->getShippingCountry() ?: $this->getUser() ? $this->getUser()->getShippingCountry() : null,
-            'shippingZip' => $order->getShippingZip() ?: $this->getUser() ? $this->getUser()->getShippingZip() : null,
-            'billingCity' => $order->getBillingCity() ?: $this->getUser() ? $this->getUser()->getBillingCity() : null,
-            'billingAddress' => $order->getBillingAddress() ?: $this->getUser() ? $this->getUser()->getBillingAddress() : null,
-            'billingAddress2' => $order->getBillingAddress2() ?: $this->getUser() ? $this->getUser()->getBillingAddress2() : null,
-            'billingProvince' => $order->getBillingProvince() ?: $this->getUser() ? $this->getUser()->getBillingProvince() : null,
-            'billingCountry' => $order->getBillingCountry() ?: $this->getUser() ? $this->getUser()->getBillingCountry() : null,
-            'billingZip' => $order->getBillingZip() ?: $this->getUser() ? $this->getUser()->getBillingZip() : null,
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+            'email' => $email,
+            'phone' => $phone,
+            'ext' => $ext,
+            'shippingCity' => $shippingCity,
+            'shippingAddress' => $shippingAddress,
+            'shippingAddress2' => $shippingAddress2,
+            'shippingProvince' => $shippingProvince,
+            'shippingCountry' => $shippingCountry,
+            'shippingZip' => $shippingZip,
+            'billingCity' => $billingCity,
+            'billingAddress' => $billingAddress,
+            'billingAddress2' => $billingAddress2,
+            'billingProvince' => $billingProvince,
+            'billingCountry' => $billingCountry,
+            'billingZip' => $billingZip,
         ]);
 
         if ($this->getRequest()->isMethod('POST')) {
