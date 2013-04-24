@@ -16,6 +16,6 @@ class CookieListener
 
     public function onKernelResponse(FilterResponseEvent $event)
     {
-        $event->getResponse()->headers->setCookie(new Cookie('cao_order_id', $this->provider->getOrder()->getId()));
+        $event->getResponse()->headers->setCookie(new Cookie('order_id', $this->provider->getOrder()->getId()));
     }
 }

@@ -19,7 +19,7 @@ class Provider
     public function getOrder()
     {
         if (!$this->order) {
-            if (is_object($this->getUser())) {
+            if ($this->getUser()) {
                 $this->order = $this->getOrderManager()->findOrderByUser($this->getUser());
             } else {
                 $this->order = $this->getOrderManager()->findOrderByCookie($this->container->get('request')->cookies->get('cao_order_id'));
@@ -27,7 +27,7 @@ class Provider
 
             if (!$this->order) {
                 $this->order = $this->getOrderManager()->create();
-                if (is_object($this->getUser())) {
+                if ($this->getUser()) {
                     $this->order->setUser($this->getUser());
                     $this->getOrderManager()->update($this->order);
                 } else{
