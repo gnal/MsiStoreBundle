@@ -22,7 +22,7 @@ class Provider
             if ($this->getUser()) {
                 $this->order = $this->getOrderManager()->findOrderByUser($this->getUser());
             } else {
-                $this->order = $this->getOrderManager()->findOrderByCookie($this->container->get('request')->cookies->get('cao_order_id'));
+                $this->order = $this->getOrderManager()->findOrderByCookie($this->container->get('request')->cookies->get('order_id'));
             }
 
             if (!$this->order) {
