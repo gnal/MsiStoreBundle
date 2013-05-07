@@ -32,6 +32,7 @@ class CheckoutController extends Controller
             ->add('billingProvince')
             ->add('billingCountry')
             ->add('billingZip')
+            ->add('shipping')
         ;
 
         $form = $builder->getForm();

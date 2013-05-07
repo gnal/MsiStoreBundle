@@ -25,6 +25,7 @@ class OrderAdmin extends Admin
             ->add('email')
             ->add('phone')
             ->add('ext')
+            ->add('shipping')
             ->add('shippingCity')
             ->add('shippingAddress')
             ->add('shippingAddress2')
